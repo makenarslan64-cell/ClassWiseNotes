@@ -1,0 +1,65 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL") // Must be defined in .env
+}
+
+model Board {
+  id      String   @id @default(cuid())
+  name    String
+  classes Class[]
+}
+
+model Class {
+  id       String    @id @default(cuid())
+  name     String
+  boardId  String
+  board    Board     @relation(fields: [boardId], references: [id])
+  subjects Subject[]
+}
+
+model Subject {
+  id        String     @id @default(cuid())
+  name      String
+  classId   String
+  class     Class      @relation(fields: [classId], references: [id])
+  chapters  Chapter[]  // 👈 Add this line
+}
+
+model Chapter {
+  id         String   @id @default(cuid())
+  name       String
+  number Int @default(0)
+    // ✅ Add this line
+  subjectId  String
+  subject    Subject  @relation(fields: [subjectId], references: [id])
+  notes      Note[]
+}
+
+
+// model Note {
+//   id          String   @id @default(cuid())
+//   title       String?  // ← make optional
+//   filePath    String?  // ← make optional
+//   description String?
+//   name        String?
+//   chapter     Chapter  @relation(fields: [chapterId], references: [id])
+//   chapterId   String
+//   createdAt   DateTime @default(now())
+// }
+
+
+model Note {
+  id          String   @id @default(uuid())
+  title       String
+  description String
+  filePath    String
+  imagePath   String? // NEW
+  chapter     Chapter @relation(fields: [chapterId], references: [id])
+  chapterId   String
+  createdAt   DateTime @default(now())
+}
+

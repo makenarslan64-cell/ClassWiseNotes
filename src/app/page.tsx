@@ -1,103 +1,136 @@
-import Image from "next/image";
+// import { prisma } from '@/lib/prisma';
+// import Link from 'next/link';
+// import { GraduationCap } from 'lucide-react'; // Icon from lucide-react
 
-export default function Home() {
+// export default async function HomePage() {
+//   const boards = await prisma.board.findMany();
+
+//   return (
+//     <div className="min-h-screen bg-gradient-to-br from-blue-50 to-white py-12 px-6">
+//       <h1 className="text-4xl font-extrabold text-center text-blue-800 mb-10">
+//         📘 Select a Board
+//       </h1>
+
+//       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8 max-w-6xl mx-auto">
+//         {boards.map((board) => (
+//           <Link
+//             key={board.id}
+//             href={`/boards/${board.id}`}
+//             className="group bg-white border border-blue-100 rounded-3xl p-6 shadow-md hover:shadow-xl hover:bg-blue-50 transition-all duration-200"
+//           >
+//             <div className="flex flex-col items-center justify-center space-y-4">
+//               <GraduationCap className="w-10 h-10 text-blue-600 group-hover:scale-110 transition-transform" />
+//               <h2 className="text-xl font-semibold text-blue-800 text-center">
+//                 {board.name}
+//               </h2>
+//             </div>
+//           </Link>
+//         ))}
+//       </div>
+//     </div>
+//   );
+// }
+
+
+// 'use client';
+
+import Link from 'next/link';
+import { GraduationCap } from 'lucide-react';
+import { Board } from '@prisma/client'; // assuming type
+import { prisma } from '@/lib/prisma';
+import HeroSection from '@/components/HeroSection';
+import FeaturesSection from '@/components/FeatureSection';
+import TestimonialsSection from '@/components/TestimonialsSection';
+import CTASection from '@/components/CTASection';
+
+export default async function HomePage() {
+  const boards: Board[] = await prisma.board.findMany();
+
+  const getColorClasses = (index: number) => {
+    const colors = [
+      {
+        bg: 'bg-blue-50 hover:bg-blue-100',
+        icon: 'text-blue-600',
+        border: 'border-blue-200 hover:border-blue-300',
+      },
+      {
+        bg: 'bg-green-50 hover:bg-green-100',
+        icon: 'text-green-600',
+        border: 'border-green-200 hover:border-green-300',
+      },
+      {
+        bg: 'bg-purple-50 hover:bg-purple-100',
+        icon: 'text-purple-600',
+        border: 'border-purple-200 hover:border-purple-300',
+      },
+      {
+        bg: 'bg-orange-50 hover:bg-orange-100',
+        icon: 'text-orange-600',
+        border: 'border-orange-200 hover:border-orange-300',
+      },
+    ];
+    return colors[index % colors.length];
+  };
+
   return (
-    <div className="font-sans grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20">
-      <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="font-mono list-inside list-decimal text-sm/6 text-center sm:text-left">
-          <li className="mb-2 tracking-[-.01em]">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] font-mono font-semibold px-1 py-0.5 rounded">
-              src/app/page.tsx
-            </code>
-            .
-          </li>
-          <li className="tracking-[-.01em]">
-            Save and see your changes instantly.
-          </li>
-        </ol>
-
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:w-auto"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 w-full sm:w-auto md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
+    <>
+    <HeroSection/>
+    <section className="py-20 bg-white">
+      <div className="container mx-auto px-4">
+        <div className="text-center mb-16">
+          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+            Choose Your Education Board
+          </h2>
+          <p className="text-lg text-gray-600 max-w-2xl mx-auto">
+            Select your board to access chapter-wise notes, past papers, and study materials
+            specifically designed for your curriculum.
+          </p>
         </div>
-      </main>
-      <footer className="row-start-3 flex gap-[24px] flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
-    </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+          {boards.map((board, index) => {
+            const colors = getColorClasses(index);
+            return (
+              <Link key={board.id} href={`/boards/${board.id}`} className="cursor-pointer">
+                <div
+                  className={`${colors.bg} ${colors.border} border-2 rounded-xl p-6 text-center transition-all duration-300 hover:shadow-lg hover:scale-105`}
+                >
+                  <div
+                    className={`w-16 h-16 ${colors.bg} ${colors.border} border rounded-full flex items-center justify-center mx-auto mb-4`}
+                  >
+                    <GraduationCap className={`text-2xl ${colors.icon}`} />
+                  </div>
+
+                  <h3 className="text-xl font-bold text-gray-900 mb-2">{board.name}</h3>
+                  <p className="text-gray-600 text-sm mb-3">
+                    {board.description || 'Board of Intermediate & Secondary Education'}
+                  </p>
+                  <div className="text-xs text-gray-500 font-medium">
+                    {board.studentCount || 'Thousands of students'}
+                  </div>
+                </div>
+              </Link>
+            );
+          })}
+        </div>
+
+        <div className="text-center mt-12">
+          <p className="text-gray-600 mb-4">
+            Can't find your board? We're constantly adding more educational boards.
+          </p>
+          <Link
+            href="/contact"
+            className="text-blue-600 hover:text-blue-700 font-medium cursor-pointer"
+          >
+            Contact us to request your board →
+          </Link>
+        </div>
+      </div>
+    </section>
+    <FeaturesSection/>
+        <TestimonialsSection/>
+        <CTASection/>
+    </>
+    
   );
 }

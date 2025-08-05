@@ -1,7 +1,18 @@
+
 @import "tailwindcss";
 
+
+
+
+/* Your custom styles */
+.button {
+  @apply bg-blue-500 text-white px-4 py-2 rounded;
+}
+
+
+
 :root {
-  --background: #ffffff;
+  --background: #444444;
   --foreground: #171717;
 }
 
