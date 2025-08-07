@@ -103,10 +103,10 @@ export default async function HomePage() {
 
                   <h3 className="text-xl font-bold text-gray-900 mb-2">{board.name}</h3>
                   <p className="text-gray-600 text-sm mb-3">
-                    {board.description || 'Board of Intermediate & Secondary Education'}
+                   Board of Intermediate & Secondary Education
                   </p>
                   <div className="text-xs text-gray-500 font-medium">
-                    {board.studentCount || 'Thousands of students'}
+                 Thousands of students
                   </div>
                 </div>
               </Link>

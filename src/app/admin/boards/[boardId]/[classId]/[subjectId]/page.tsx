@@ -2,15 +2,17 @@ import { prisma } from '@/lib/prisma';
 import Link from 'next/link';
 import { revalidatePath } from 'next/cache';
 
-interface SubjectPageProps  {
-  params: {
-    boardId: string;
-    classId: string;
-    subjectId: string;
-  };
-}
+// interface SubjectPageProps  {
+//   params: {
+//     boardId: string;
+//     classId: string;
+//     subjectId: string;
+//   };
+// }
 
-export default async function SubjectPage({ params }: SubjectPageProps) {
+export default async function SubjectPage({ params }: {params: { boardId: string;
+  classId: string;
+  subjectId: string}} ) {
   const { boardId, classId, subjectId } = params;
 
   const chapters = await prisma.chapter.findMany({
@@ -26,18 +28,6 @@ export default async function SubjectPage({ params }: SubjectPageProps) {
 
       {chapters.length > 0 ? (
         <div className="grid gap-4 mb-10">
-          {/* {chapters.map((chapter) => (
-            <Link
-              key={chapter.id}
-              href={`/admin/boards/${boardId}/${classId}/${subjectId}/${chapter.id}`}
-              className="block bg-white border border-gray-200 rounded-xl shadow hover:shadow-md transition p-4"
-            >
-              <span className="text-blue-700 font-semibold">
-                Chapter {chapter.number}:
-              </span>{' '}
-              <span className="text-gray-800">{chapter.name}</span>
-            </Link>
-          ))} */}
           {chapters.map((chapter) => (
   <div
     key={chapter.id}
